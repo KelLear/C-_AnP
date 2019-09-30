@@ -6,18 +6,20 @@ using System.Threading.Tasks;
 
 namespace HW1_Task2
 {
-    struct Man
-    {
-        string name;
-
-    }
-
+  
     class Program
     {
-        private delegate string Func(string name, string description, int age);
+        private delegate void Func();
+
+        private static Man Man1 = new Man("Петя", "школьный друг", 30);
+        private static Man Man2 = new Man("Вася", "сосед", 54);
+        private static Man Man3 = new Man("Николай", "сын", 4);
+
+        private List<Man> manList = new List<Man> { Man1, Man2, Man3 };
 
         public static readonly string Address = Constants.Address;
         public static readonly string Format = Constants.Format;
+
         private static void DummyFunc()
         {
             WriteToConsole("Петя", "школьный друг", 30);
@@ -40,7 +42,7 @@ namespace HW1_Task2
         }
 
 
-        private static void MakeAction(Action action)
+        private static void MakeAction(Func action)
         {
             string methodName = action.Method.Name;
             Console.WriteLine("Начало работы метода {0}", methodName);
@@ -49,9 +51,9 @@ namespace HW1_Task2
         }
 
 
-        private static List<Action> GetActionSteps()
+        private static List<Func> GetActionSteps()
         {
-            return new List<Action>()
+            return new List<Func>()
             {
                 DummyFunc,
                 DummyFuncAgain,
@@ -62,7 +64,7 @@ namespace HW1_Task2
 
         static void Main(string[] args)
         {
-            List<Action> actions = GetActionSteps();
+            List<Func> actions = GetActionSteps();
             foreach (var action in actions)
             {
                 MakeAction(action);
